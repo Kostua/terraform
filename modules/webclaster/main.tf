@@ -6,7 +6,6 @@ resource "aws_launch_configuration" "example" {
   image_id        = var.instance_image_id
   instance_type   = var.instance_type
   security_groups = [aws_security_group.instance.id]
-  user_data       = data.template_file.user_data.rendered
 }
 
 
@@ -89,9 +88,11 @@ resource "aws_lb_listener_rule" "asg" {
   priority     = 100
 
   condition {
-    field  = "path-pattern"
-    values = ["*"]
+    path_pattern {
+      values = ["*"]
+    }
   }
+
 
   action {
     type             = "forward"
