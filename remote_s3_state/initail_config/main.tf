@@ -1,9 +1,20 @@
 terraform {
-  required_version = "~> 0.13"
+  required_version = ">= 0.13"
+}
+
+provider "vault" {
+  skip_tls_verify = true
+}
+
+data "vault_aws_access_credentials" "aws_creds" {
+  backend="aws"
+  role="devops-role"
 }
 
 provider "aws" {
-  region = var.region
+  access_key = "data.vault_aws_access_credentials.aws_creds.access_key"
+  secret_key = "data.vault_aws_access_credentials.aws_creds.secret_key"
+  region =  var.region
 }
 
 resource "aws_s3_bucket" "terraform_state" {
