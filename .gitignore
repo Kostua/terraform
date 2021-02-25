@@ -4,3 +4,4 @@ Learn/
 terraform.tfstate
 terraform.tfvars
 *.tfstate*
+.terraform.lock.hcl
