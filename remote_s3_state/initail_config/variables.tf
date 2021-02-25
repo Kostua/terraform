@@ -11,6 +11,18 @@ variable "region" {
 
 }
 
+variable "vault_backend" {
+  description = "The path to the AWS secret backend to read credentials from"
+  type        = string
+  default     = "aws"
+}
+
+variable "vault_role" {
+  description = "The name of the AWS secret backend role to read credentials from"
+  type = string
+  default = "devops-role"
+}
+
 variable "bucket_name" {
   description = "The name of the S3 bucket. Must be globally unique."
   type        = string

@@ -7,14 +7,14 @@ provider "vault" {
 }
 
 data "vault_aws_access_credentials" "aws_creds" {
-  backend="aws"
-  role="devops-role"
+  backend = var.vault_backend
+  role    = var.vault_role
 }
 
 provider "aws" {
-  access_key = "data.vault_aws_access_credentials.aws_creds.access_key"
-  secret_key = "data.vault_aws_access_credentials.aws_creds.secret_key"
-  region =  var.region
+  access_key = data.vault_aws_access_credentials.aws_creds.access_key
+  secret_key = data.vault_aws_access_credentials.aws_creds.secret_key
+  region     =  var.region
 }
 
 resource "aws_s3_bucket" "terraform_state" {
@@ -40,7 +40,7 @@ resource "aws_s3_bucket" "terraform_state" {
 
   tags = {
     Environment = "system"
-    Service = "terraform"
+    Service     = "terraform"
   }
 
 }
@@ -57,7 +57,7 @@ resource "aws_dynamodb_table" "terraform_locks" {
 
   tags = {
     Environment = "system"
-    Service = "terraform"
+    Service     = "terraform"
   }
 
 }

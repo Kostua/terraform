@@ -7,10 +7,10 @@ The S3 bucket and DynamoDB table is used as a
 
 ## Quick start
 
-
 ```
-export AWS_ACCESS_KEY_ID=(your access key id)
-export AWS_SECRET_ACCESS_KEY=(your secret access key)
+$ vault login -method=github token=$GITHUB_TOKEN
+$ export VAULT_TOKEN=<VAULT TOKEN>
+$ terraform apply
 ```
 
 Specify a name for the AWS region, S3 bucket and DynamoDB table in `variables.tf` using the `default` parameter:
@@ -31,6 +31,21 @@ variable "table_name" {
   description = "The name of the DynamoDB table. Must be unique in this AWS account."
   type        = string
   default     = "<YOUR TABLE NAME>"
+}
+
+variable "vault_addr" {
+  description = "Vault server address"
+  type        = string
+}
+
+variable "vault_backend" {
+  description = "The path to the AWS secret backend to read credentials from"
+  type        = string
+}
+
+variable "vault_role" {
+  description = "The name of the AWS secret backend role to read credentials from"
+  type = string
 }
 
 
